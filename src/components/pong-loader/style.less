@@ -1,0 +1,78 @@
+.pongLoader {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  display: block;
+}
+
+.pongLoader__playerOne {
+  height: 40px;
+  width: 5px;
+  background-color: white;
+  position: relative;
+  left: 0;
+  animation: movePaddleOne 4s infinite;
+}
+
+.pongLoader__playerTwo {
+  height: 40px;
+  width: 5px;
+  background-color: white;
+  position: relative;
+  left: 200px;
+  animation: movePaddleTwo 4s infinite;
+}
+
+.pongLoader__ball{
+  position: relative;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background-color: white;
+  animation: moveBall 4s infinite linear;
+}
+
+@keyframes movePaddleOne{
+  0%, 100%{
+    transform: translate(0px, 100px);
+  }
+  25% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  75% {
+    transform: translate(0px, 100px);
+  }
+}
+
+@keyframes movePaddleTwo{
+  0%, 100% {
+    transform: translate(0px, -50px);
+  }
+  25% {
+    transform: translate(0px, 10px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  75% {
+    transform: translate(0px, 50px);
+  }
+}
+
+@keyframes moveBall{
+  0%, 100% {
+    transform:translate(0, 30px);
+  }
+  25% {
+    transform:translate(198px, -25px);
+  }
+  50% {
+    transform: translate(0, -55px);
+  }
+  75% {
+    transform: translate(198px, 15px);
+  }
+}

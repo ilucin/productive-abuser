@@ -1,0 +1,58 @@
+{
+  "name": "productive-abuser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint src && preact test",
+    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "build": "preact build",
+    "serve": "preact build && preact serve",
+    "dev": "preact watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "standard-preact"
+    ],
+    "rules": {
+      "semi": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ]
+    },
+    "globals": {
+      "fetch": true,
+      "Headers": true
+    }
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-preact": "^1.1.6",
+    "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "if-env": "^1.0.0",
+    "node-sass": "^4.5.3",
+    "preact-cli": "^1.1.2",
+    "socket.io-client": "^2.0.3"
+  },
+  "dependencies": {
+    "preact": "^8.1.0",
+    "preact-compat": "^3.16.0",
+    "preact-router": "^2.5.2"
+  }
+}
