@@ -1,0 +1,45 @@
+.radioStationItem {
+  padding: 10px 20px;
+  border-bottom: 1px solid #666;
+  background-color: #FFAACC;
+  color: #222;
+
+  &:not(.radioStationItem__isCurrent) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(#FFAACC, 5%);
+    }
+  }
+
+  &.radioStationItem__isCurrent {
+    background-color: #AAFFCC;
+  }
+}
+
+.radioStationItem_name {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.radioStationItem_owner {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.radioStationItem_tags {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.radioStationItem_tag {
+  padding: 2px 5px;
+  background-color: #CCFFAA;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-right: 5px;
+}

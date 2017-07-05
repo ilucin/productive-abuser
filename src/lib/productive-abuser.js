@@ -127,7 +127,7 @@ Object.assign(ProductiveAbuser.prototype, {
           .reduce((messages, activity) => {
             const comment = res.included.find((model) => model.id === String(activity.attributes.item_id));
             if (comment && !comment.attributes.deleted_at) {
-              const person = normalizePerson(findRelationshipInIncluded(comment, res.included, 'person', 'people'));
+              const person = normalizePerson(findRelationshipInIncluded(comment, res.included, 'creator', 'people'));
 
               messages.push({
                 id: comment.id,
@@ -256,8 +256,8 @@ Object.assign(ProductiveAbuser.prototype, {
       .then((res) => res.json())
       .then((res) => this._onNewNotification({
         channelId: String(res.data[0].attributes.target_id),
-        creator: normalizePerson(findRelationshipInIncluded(res.data[0], res.included, 'actor', 'people')),
-        message: getTextContentFromHtml(res.data[0].attributes.excerpt),
+        person: normalizePerson(findRelationshipInIncluded(res.data[0], res.included, 'actor', 'people')),
+        text: getTextContentFromHtml(res.data[0].attributes.excerpt),
         title: getTextContentFromHtml(res.data[0].attributes.title)
       }));
   },

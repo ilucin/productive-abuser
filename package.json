@@ -33,7 +33,8 @@
     },
     "globals": {
       "fetch": true,
-      "Headers": true
+      "Headers": true,
+      "YT": true
     }
   },
   "devDependencies": {

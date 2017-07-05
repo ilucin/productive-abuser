@@ -18,10 +18,10 @@ export default class HomeRoute extends Component {
     window.hr = this;
     this.paHome = window.paHome = new ProductiveAbuser(config);
     this.paHome.connect((ev) => this.onProductiveMessage(ev))
-      .then((person) => this.setState({isLoading: false, connectionError: null}))
       .then(() => this.paHome.fetchChannels())
       .then((channels) => channels.find((channel) => channel.tags.includes('productive-abuser')))
       .then((channel) => (this.channel = channel))
+      .then(() => this.setState({isLoading: false, connectionError: null}))
       .catch((err) => {
         if (err instanceof Error) {
           throw err;
@@ -37,7 +37,7 @@ export default class HomeRoute extends Component {
   onProductiveMessage(ev) {
     if (!this.channel || ev.channelId !== this.channel.id) {
       this.paHome.fetchChannel(ev.channelId).then((channel) => {
-        if (channel.owner.id === this.paHome.person.id && channel.tags.includes('productive-abuser')) {
+        if (channel.tags.includes('productive-abuser')) {
           this.channel = channel;
           this.setState({message: 'Hi Ivan!'});
         }
@@ -45,7 +45,7 @@ export default class HomeRoute extends Component {
       return;
     }
 
-    const msg = ev.message.toLowerCase();
+    const msg = ev.text.toLowerCase();
     if (msg === 'start') {
       this.setState({message: 'Oh really?'});
       // setTimeout(() => this.setState({message: 'Productive abuser'}), 5000);
@@ -58,14 +58,14 @@ export default class HomeRoute extends Component {
     } else if (msg.indexOf('play') >= 0 && msg.indexOf('snake') >= 0) {
       console.log('start snake');
     } else if (msg.indexOf('play') >= 0 && msg.indexOf('connect three with') >= 0) {
-      const p2 = ev.message.split('connect three with')[1].trim();
-      const p1 = `${ev.creator.firstName} ${ev.creator.lastName}`.trim();
+      const p2 = ev.text.split('connect three with')[1].trim();
+      const p1 = `${ev.person.firstName} ${ev.person.lastName}`.trim();
 
       if (p1 && p2) {
         this.playConnectThree = connectThree(p1, p2);
       }
     } else if (msg.indexOf('connect three ') === 0 && this.playConnectThree) {
-      const p = `${ev.creator.firstName} ${ev.creator.lastName}`;
+      const p = `${ev.person.firstName} ${ev.person.lastName}`;
       const moves = msg.split('connect three ')[1].split(' ');
       const state = this.playConnectThree(p, parseInt(moves[0], 10), parseInt(moves[1], 10));
       this.paHome.postMessageToChannel(this.channel.id, `<pre> ${state} </pre>`);

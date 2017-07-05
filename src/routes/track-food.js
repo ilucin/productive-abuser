@@ -47,8 +47,8 @@ export default class TrackFoodRoute extends Component {
 
   onPaFoodTrackerMessage(ev) {
     const person = this.state.person;
-    if (person && ev.creator.id === person.id && ev.message.indexOf('I ate some') === 0) {
-      const food = ev.message.split('I ate some')[1].trim();
+    if (person && ev.person.id === person.id && ev.text.indexOf('I ate some') === 0) {
+      const food = ev.text.split('I ate some')[1].trim();
 
       this.paPerson.query('time_entries', {
         method: 'POST',
