@@ -1,7 +1,15 @@
-let ENV = 'development';
+let ENV = 'production';
+let qpConfig;
 
 if (typeof window !== 'undefined') {
-  ENV = window.ENV || 'development';
+  ENV = window.ENV || ENV;
+}
+
+if (typeof location !== 'undefined' && typeof location.search !== 'undefined' && ENV === 'production') {
+  const qpConfigStr = location.search.slice(1).split('&').find((str) => str.indexOf('config=') === 0).split('=')[1];
+  if (qpConfigStr) {
+    qpConfig = JSON.parse(decodeURIComponent(atob(qpConfigStr)));
+  }
 }
 
 const development = {
@@ -18,7 +26,6 @@ const development = {
 const production = {
   realtimeHost: 'https://realtime.productive.io',
   apiHost: 'https://api.productive.io',
-  token: '',
   personId: '13892',
   projectId: '23',
   organizationId: '1',
@@ -26,4 +33,4 @@ const production = {
   foodServiceId: '251'
 };
 
-export default Object.assign({}, ENV === 'development' ? development : production);
+export default Object.assign({}, ENV === 'development' ? development : production, qpConfig);

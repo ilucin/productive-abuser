@@ -1,0 +1,9 @@
+#!/bin/bash
+
+preact build
+rm build/manifest.json
+rm build/sw.js
+rm build/style.css.map
+rm -r docs
+mkdir docs
+cp -r build/* docs

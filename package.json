@@ -39,7 +39,9 @@
       "localStorage": true,
       "alert": true,
       "btoa": true,
-      "Image": true
+      "Image": true,
+      "location": true,
+      "atob": true
     }
   },
   "devDependencies": {
