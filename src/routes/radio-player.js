@@ -10,6 +10,7 @@ import config from '../lib/config';
 import {action, shuffleArray} from '../lib/helpers';
 import {messageToCommand, channelToStation, commandToSongs, addCommandSongsToPlaylist} from '../lib/player';
 import resolveYtPlayerAPI from '../lib/resolve-yt-player-api';
+import handleMessageForRouting from '../lib/routing-message-handlers';
 
 export default class RadioPlayerRoute extends Component {
   constructor() {
@@ -75,6 +76,8 @@ export default class RadioPlayerRoute extends Component {
   }
 
   onProductiveMessage(ev) {
+    handleMessageForRouting(ev);
+
     const command = messageToCommand(ev);
     const {currentStation} = this.state;
     command.isRealtime = true;

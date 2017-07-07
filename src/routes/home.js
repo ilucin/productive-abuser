@@ -1,8 +1,8 @@
 import {h, Component} from 'preact';
-import {route} from 'preact-router';
 import Home from '../components/home';
 import config from '../lib/config';
 import ProductiveAbuser from '../lib/productive-abuser';
+import handleMessageForRouting from '../lib/routing-message-handlers';
 
 export default class HomeRoute extends Component {
   constructor() {
@@ -36,17 +36,23 @@ export default class HomeRoute extends Component {
   }
 
   onProductiveMessage(ev) {
+    handleMessageForRouting(ev);
+    const msg = ev.text.toLowerCase();
+
+    if (ev.person.id === config.presenterPersonId && msg.indexOf('tanja') >= 0) {
+      this.setState({message: null, videoSrc: null, imageSrc: '/assets/tanja.png'});
+    }
+
     if (!this.channel || ev.channelId !== this.channel.id) {
       this.pa.fetchChannel(ev.channelId).then((channel) => {
         if (channel.tags.includes('productive-abuser')) {
           this.channel = channel;
-          this.setState({message: 'Hi Ivan!'});
+          this.setState({message: 'Hi Ivan!', videoSrc: null, imageSrc: null});
         }
       });
       return;
     }
 
-    const msg = ev.text.toLowerCase();
     if (msg === 'let\'s start') {
       this.setState({message: 'Oh really?', videoSrc: null, imageSrc: null});
       // setTimeout(() => this.setState({message: 'Productive abuser'}), 5000);
@@ -62,8 +68,8 @@ export default class HomeRoute extends Component {
       this.setState({imageSrc: '/assets/github.png', videoSrc: null, message: null});
     } else if (msg === 'let\'s abuse productive') {
       this.setState({message: 'Welcome to Productive Abuser', videoSrc: null, imageSrc: null});
-    } else if (msg.indexOf('ne da mi se vise raditi') >= 0) {
-      route('/connect-three');
+    } else if (msg.indexOf('music room') >= 0) {
+      this.setState({imageSrc: '/assets/music-academy-extra.png', videoSrc: null, message: null});
     }
   }
 

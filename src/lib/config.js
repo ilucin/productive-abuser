@@ -11,7 +11,8 @@ const development = {
   token: '3fd23548-1605-4202-a6f1-c0580fd927d2',
   projectId: '102',
   organizationId: '16',
-  presenterPersonId: '91'
+  presenterPersonId: '91',
+  foodServiceId: '251'
 };
 
 const production = {
@@ -21,7 +22,8 @@ const production = {
   personId: '13892',
   projectId: '23',
   organizationId: '1',
-  presenterPersonId: '91'
+  presenterPersonId: '99',
+  foodServiceId: '251'
 };
 
 export default Object.assign({}, ENV === 'development' ? development : production);

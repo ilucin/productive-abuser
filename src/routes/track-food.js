@@ -3,6 +3,7 @@ import config from '../lib/config';
 import TrackFood from '../components/track-food';
 import ProductiveAbuser from '../lib/productive-abuser';
 import {action} from '../lib/helpers';
+import handleMessageForRouting from '../lib/routing-message-handlers';
 
 export default class TrackFoodRoute extends Component {
   constructor() {
@@ -15,15 +16,19 @@ export default class TrackFoodRoute extends Component {
       isConnecting: true,
       connectionError: null
     };
+  }
 
-    this.paFoodTracker = new ProductiveAbuser(config);
-    this.paFoodTracker.connect((ev) => this.onPaFoodTrackerMessage(ev))
+  componentWillMount() {
+    this.pa = new ProductiveAbuser(config);
+    this.pa.connect((ev) => this.onProductiveMessage(ev))
       .then((person) => this.setState({isConnecting: false, connectionError: null}))
       .catch((connectionError) => this.setState({isConnecting: false, connectionError}));
   }
 
   componentWillUnmount() {
-    this.paFoodTracker.disconnect();
+    if (this.pa) {
+      this.pa.disconnect();
+    }
 
     if (this.paPerson) {
       this.paPerson.disconnect();
@@ -44,13 +49,19 @@ export default class TrackFoodRoute extends Component {
       .catch(() => this.setState({isLoading: false, isTokenError: true}));
   }
 
-  onPaFoodTrackerMessage(ev) {
-    const person = this.state.person;
-    if (person && ev.person.id === person.id && ev.text.indexOf('I ate some') === 0) {
-      const food = ev.text.split('I ate some')[1].trim();
+  onProductiveMessage(ev) {
+    handleMessageForRouting(ev);
 
-      this.paPerson.query('time_entries', {
+    const person = this.state.person;
+    if (person && ev.person.id === person.id && ev.text.indexOf('Danas sam jeo') === 0) {
+      const food = ev.text.split('Danas sam jeo')[1].trim();
+
+      this.paPerson.query('time_entries', {}, {
         method: 'POST',
+        headers: new Headers({
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json; charset=utf-8'
+        }),
         body: JSON.stringify({
           data: {
             type: 'time-entries',
@@ -62,7 +73,7 @@ export default class TrackFoodRoute extends Component {
             },
             relationships: {
               person: {data: {type: 'people', id: person.id}},
-              service: {data: {type: 'services', id: '1'}},
+              service: {data: {type: 'services', id: config.foodServiceId}},
               approver: {data: null},
               task: {data: null}
             }

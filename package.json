@@ -38,7 +38,8 @@
       "self": true,
       "localStorage": true,
       "alert": true,
-      "btoa": true
+      "btoa": true,
+      "Image": true
     }
   },
   "devDependencies": {

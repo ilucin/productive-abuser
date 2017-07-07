@@ -4,6 +4,7 @@ import ConnectThree from '../components/connect-three';
 import config from '../lib/config';
 import ProductiveAbuser from '../lib/productive-abuser';
 import connectThree from '../lib/connect-three';
+import handleMessageForRouting from '../lib/routing-message-handlers';
 
 export default class ConnectThreeRoute extends Component {
   constructor() {
@@ -37,6 +38,8 @@ export default class ConnectThreeRoute extends Component {
   }
 
   onProductiveMessage(ev) {
+    handleMessageForRouting(ev);
+
     if (!this.channel || ev.channelId !== this.channel.id) {
       this.pa.fetchChannel(ev.channelId).then((channel) => {
         if (channel.tags.includes('snake')) {
