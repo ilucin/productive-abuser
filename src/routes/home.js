@@ -1,4 +1,5 @@
 import {h, Component} from 'preact';
+import {route} from 'preact-router';
 import Home from '../components/home';
 import config from '../lib/config';
 import ProductiveAbuser from '../lib/productive-abuser';
@@ -7,11 +8,11 @@ export default class HomeRoute extends Component {
   constructor() {
     super();
     this.state = {
-      message: 'Welcome to Productive Abuser',
+      message: 'Infinum Showoff 2017',
       isLoading: true,
       connectionError: null,
       videoSrc: null,
-      imageSrc: '/assets/github.png'
+      imageSrc: null
     };
   }
 
@@ -46,7 +47,7 @@ export default class HomeRoute extends Component {
     }
 
     const msg = ev.text.toLowerCase();
-    if (msg === 'start') {
+    if (msg === 'let\'s start') {
       this.setState({message: 'Oh really?', videoSrc: null, imageSrc: null});
       // setTimeout(() => this.setState({message: 'Productive abuser'}), 5000);
     } else if (msg === 'oh common') {
@@ -54,11 +55,15 @@ export default class HomeRoute extends Component {
       // setTimeout(() => this.setState({message: 'Productive abuser'}), 5000);
     } else if (msg === 'pls start?') {
       this.setState({message: 'Okay, let\'s go!', videoSrc: null, imageSrc: null});
-      setTimeout(() => this.setState({message: 'Wanna play a game?'}), 5000);
-    } else if (msg === 'gdje je token?') {
+      setTimeout(() => this.setState({message: 'State of Producitve'}), 5000);
+    } else if (msg.indexOf('gdje je token?') >= 0) {
       this.setState({videoSrc: '/assets/gdje-je-token.mp4', message: null});
-    } else if (msg === 'github') {
-      this.setState({imageSrc: '/assets/github.png', videoSrc: null});
+    } else if (msg.indexOf('gdje je kod?') >= 0) {
+      this.setState({imageSrc: '/assets/github.png', videoSrc: null, message: null});
+    } else if (msg === 'let\'s abuse productive') {
+      this.setState({message: 'Welcome to Productive Abuser', videoSrc: null, imageSrc: null});
+    } else if (msg.indexOf('ne da mi se vise raditi') >= 0) {
+      route('/connect-three');
     }
   }
 

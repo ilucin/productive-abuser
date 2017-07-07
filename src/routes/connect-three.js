@@ -37,11 +37,12 @@ export default class ConnectThreeRoute extends Component {
   }
 
   onProductiveMessage(ev) {
-    if (ev.person.id !== config.presenterPersonId && ev.text === 'ajmo dalje') {
-      route('/snake');
-    }
-
     if (!this.channel || ev.channelId !== this.channel.id) {
+      this.pa.fetchChannel(ev.channelId).then((channel) => {
+        if (channel.tags.includes('snake')) {
+          route('/snake');
+        }
+      });
       return;
     }
 
