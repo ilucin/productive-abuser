@@ -112,6 +112,11 @@ export default class RadioPlayerRoute extends Component {
       this.youtubePlayer.stop();
     }
 
+    this.paPlayer.fetchSubscribersForChannel(station.id).then((count) => {
+      station.likeCount = count;
+      this.setState({currentStation: station});
+    });
+
     this.setState({currentStation: station, isLoadingPlaylist: true});
     this.paPlayer.fetchMessagesForChannel(station.id).then((messages) => {
       if (this.state.currentStation !== station) {
@@ -177,7 +182,7 @@ export default class RadioPlayerRoute extends Component {
     }
   }
 
-  render(props, {isLoading, isLoadingPlaylist, connectionError, stations, currentStation, playlist}) {
+  render(props, {isLoading, isLoadingPlaylist, connectionError, stations, currentStation, playlist, currentSong}) {
     return (
       <PlayerLayout
         radioStationsSlot={
@@ -205,6 +210,7 @@ export default class RadioPlayerRoute extends Component {
             <RadioPlaylist
               station={currentStation}
               playlist={playlist}
+              currentSong={currentSong}
             />
           )
         }

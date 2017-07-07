@@ -1,15 +1,19 @@
 let ENV = 'production';
 let qpConfig;
 
-if (typeof window !== 'undefined') {
-  ENV = window.ENV || ENV;
-}
-
 if (typeof location !== 'undefined' && typeof location.search !== 'undefined' && ENV === 'production') {
-  const qpConfigStr = location.search.slice(1).split('&').find((str) => str.indexOf('config=') === 0).split('=')[1];
+  let qpConfigStr = location.search.slice(1).split('&').find((str) => str.indexOf('config=') === 0);
   if (qpConfigStr) {
-    qpConfig = JSON.parse(decodeURIComponent(atob(qpConfigStr)));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('qpConfigStr', qpConfigStr);
+    }
+  } else {
+    if (typeof localStorage !== 'undefined') {
+      qpConfigStr = localStorage.getItem('qpConfigStr');
+    }
   }
+
+  qpConfig = JSON.parse(decodeURIComponent(atob(qpConfigStr.split('=')[1])));
 }
 
 const development = {
@@ -30,7 +34,7 @@ const production = {
   projectId: '23',
   organizationId: '1',
   presenterPersonId: '99',
-  foodServiceId: '251'
+  foodServiceId: '35499'
 };
 
 export default Object.assign({}, ENV === 'development' ? development : production, qpConfig);

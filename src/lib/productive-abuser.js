@@ -96,6 +96,13 @@ Object.assign(ProductiveAbuser.prototype, {
     this._onChannelMessageHandler = clb;
   },
 
+  fetchSubscribersForChannel(channelId) {
+    return this.depaginatedQuery('people', {filter: {subscribable_type: 'task', subscribable_id: channelId}})
+      .then((responses) => (
+        responses.reduce((count, res) => (res.data.length + count), 0) - 1
+      ));
+  },
+
   fetchChannels() {
     const {projectId} = this.config;
 
