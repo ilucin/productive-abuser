@@ -12,6 +12,16 @@ export default class TrackFood extends Component {
   }
 
   render({token, person, isLoading, isTokenError, updateToken, applyToken, isConnecting, connectionError}) {
+    if (isConnecting) {
+      return (
+        <section class={s.trackFood}>
+          <div class={s.trackFood_box}>
+            <PongLoader />
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section class={s.trackFood}>
         <div class={s.trackFood_box}>
@@ -26,10 +36,6 @@ export default class TrackFood extends Component {
             onKeyup={action(this, 'onInputKeyup')}
             placeholder='Write your token here'
           />
-
-          {isConnecting &&
-            <PongLoader />
-          }
 
           {connectionError &&
             <div class={s.trackFood_tokenError}>

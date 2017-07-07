@@ -20,7 +20,7 @@ export default function connectThree(p1, p2) {
     winner = isPlayerWinner(p1) ? p1 : (isPlayerWinner(p2) && p2);
     if (winner) {
       return `Winner is ${winner}`;
-    } else if (!g.reduce((hasZero, row) => hasZero && row.includes(0), false)) {
+    } else if (!g.reduce((hasZero, row) => hasZero || row.includes(0), false)) {
       return 'Nobody wins';
     }
 

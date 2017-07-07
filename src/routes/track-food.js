@@ -7,9 +7,8 @@ import {action} from '../lib/helpers';
 export default class TrackFoodRoute extends Component {
   constructor() {
     super();
-    window.trackFoodRoute = this;
     this.state = {
-      token: window.localStorage.getItem('trackFoodToken'),
+      token: localStorage.getItem('trackFoodToken'),
       isLoading: false,
       isTokenError: false,
       person: null,
@@ -38,7 +37,7 @@ export default class TrackFoodRoute extends Component {
   onTokenApply() {
     this.paPerson = new ProductiveAbuser(Object.assign({}, config, {token: this.state.token}));
     this.setState({isLoading: true});
-    window.localStorage.setItem('trackFoodToken', this.state.token);
+    localStorage.setItem('trackFoodToken', this.state.token);
 
     this.paPerson.fetchTokenPerson()
       .then((person) => this.setState({person, isLoading: false, isTokenError: false}))
@@ -69,8 +68,8 @@ export default class TrackFoodRoute extends Component {
             }
           }
         })
-      }).then(() => window.alert(food))
-        .catch((err) => window.alert(err));
+      }).then(() => alert(food))
+        .catch((err) => alert(err));
     }
   }
 

@@ -1,11 +1,12 @@
 let isYouTubeIframeApiReady = false;
 let promiseResolve;
 
-window.onYouTubeIframeAPIReady = function() {
-  console.log('onYouTubeIframeAPIReady');
-  isYouTubeIframeApiReady = true;
-  promiseResolve(window.YT);
-};
+if (typeof window !== 'undefined') {
+  window.onYouTubeIframeAPIReady = function() {
+    isYouTubeIframeApiReady = true;
+    promiseResolve(YT);
+  };
+}
 
 export default function resolveYtPlayerAPI() {
   return new Promise((resolve, reject) => {
@@ -17,7 +18,7 @@ export default function resolveYtPlayerAPI() {
       firstScriptTag.parentNode.insertBefore(el, firstScriptTag);
       promiseResolve = resolve;
     } else {
-      resolve(window.YT);
+      resolve(YT);
     }
   });
 }

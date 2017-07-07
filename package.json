@@ -34,7 +34,11 @@
     "globals": {
       "fetch": true,
       "Headers": true,
-      "YT": true
+      "YT": true,
+      "self": true,
+      "localStorage": true,
+      "alert": true,
+      "btoa": true
     }
   },
   "devDependencies": {
